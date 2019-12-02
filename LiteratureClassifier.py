@@ -50,6 +50,8 @@ for filename in glob.iglob("DataScienceRawData/mystery/*.txt"):
 
 
 y_train=np.arrary([np.zeros(6),np.ones(6)]).flatten()
+
+
 #remove the project info and empty lines
 def removeprointo(txt):
     txt=txt[txt.find('***')+2:]  
@@ -59,6 +61,7 @@ def removeprointo(txt):
 
 
 X_t=np.zeros((24,3839616))
+#word to vectors
 
 def nlp2vector(str1):
 	
@@ -66,27 +69,29 @@ def nlp2vector(str1):
 	vectors = np.vstack([word.vector for word in doc4 if word.has_vector])
 	return vectors[0:9999].flatten()
 
-for i in range(24):
 
-	
-	
-	X_t[i]=nlp2vector(documents[i])
 
-for token in doc4:
-	print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,)
+#for token in doc4:
+#	print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,)
 # token.lemma_ is the word lemma 
 #for instance : 'has' and 'having' and 'had' lemma are all 'have'
 
-#word to vectors
 
+
+for i in documents:
+	tep=removeprointo(i)
+	tem=nlp2vector(tep)
+	j=0
+	X_t[j]=tem
+	j+=1
 
 
 #compress with PCA
-pca = PCA(n_components=2)
+#pca = PCA(n_components=2)
 # vecs_transformed = pca.fit_transform(vectors)
 
 
-#test dataset
+#test dataset 
 
 with open("DataScienceRawData/fairytale/A Tangled Tale.txt") as file:
     txt5=file.read()
